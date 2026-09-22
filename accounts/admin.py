@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import ApplicantProfile, RecruiterProfile, User
 
-# Register your models here.
+admin.site.register(User)
+admin.site.register(ApplicantProfile)
+admin.site.register(RecruiterProfile)
