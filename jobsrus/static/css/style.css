@@ -1,0 +1,61 @@
+:root {
+    --bs-primary: #B39051;      /* Gold */
+    --bs-secondary: #051E39;    /* Navy */
+    --bs-light: #FFFFFF;        /* White */
+}
+
+/* Background */
+.bg-primary {
+    background-color: #B39051 !important;
+}
+.bg-secondary {
+    background-color: #051E39 !important;
+}
+.bg-light {
+    background-color: #FFFFFF !important;
+}
+
+/* Button */
+.btn-primary {
+    background-color: #B39051 !important;
+}
+.btn-secondary {
+    color: #FFFFFF !important;
+    background-color: #051E39 !important;
+}
+.btn-light {
+    background-color: #FFFFFF !important;
+}
+
+/* text */
+.text-primary {
+    color: #B39051 !important;
+}
+.text-secondary {
+    color: #051E39 !important;
+}
+.text-light {
+    color: #FFFFFF !important;
+}
+
+/* Border */
+.border-primary {
+    border-color: #B39051 !important;
+}
+.border-secondary {
+    border-color: #051E39 !important;
+}
+.border-light {
+    border-color: #FFFFFF !important;
+}
+
+.searchChoice-w {
+    width: 100px;
+}
+.searchButtonBlackBorder {
+    border-left-color: #000000;
+    border-right-color: #000000;
+    border-top-color: #000000;
+    border-bottom-color: #000000;
+    border-width: 0px;
+}

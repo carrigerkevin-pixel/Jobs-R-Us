@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ template_data.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</head>
+<body class="bg-secondary border-primary border">
+    <nav class="navbar px-3 bg-primary border-light border navbar-expand-lg">
+        <div class="container border-light navbar-nav">
+            <!-- TODO need to make this redirect to home or profile depending on if user is logged in or not-->
+            <a class="navbar-brand nav-item">
+                <img src="{% static 'img\placeholder.png' %}" alt="logo" height="60">
+            </a>
+            <div class="nav-item dropdown">
+                <button class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                    Navigation
+                </button>
+                <ul class="dropdown-menu bg-secondary border-light">
+                    <li><a class="dropdown-item text-light">Action</a></li>
+                    <li><a class="dropdown-item text-light">Another action</a></li>
+                    <li><a class="dropdown-item text-light">Something else here</a></li>
+                </ul>
+            </div>
+            <div class="nav-item d-flex">
+                <div class="dropdown">
+                    <button id="searchDropDown" class="btn btn-secondary dropdown-toggle nav-link rounded-circle searchChoice-w" data-bs-toggle="dropdown" aria-expanded="false" width="20">
+                        People
+                    </button>
+                    <ul class="dropdown-menu bg-secondary border-light">
+                        <li><a id="searchDropVal" class="dropdown-item text-light" data-value="jobs">Jobs</a></li>
+                    </ul>
+                    <input type="hidden" name="searchPage" id="searchChoice" value="people">
+                </div>
+                <!-- TODO make action fit into search pages-->
+                <form method="GET" action="" class="d-flex">
+                    <input type="text" class="form-control">
+                    <button class="btn-secondary rounded-circle" type="submit">Go!</button>
+                </form>
+            </div>
+            <!-- TODO Make these redirect -->
+            <a class="navbar-brand nav-item">
+                <img src="{% static 'img\placeholder.png' %}" alt="Messaging" height="60">
+            </a>
+            <a class="navbar-brand nav-item">
+                <img src="{% static 'img\placeholder.png' %}" alt="Notifications" height="60">
+            </a>
+            <a class="navbar-brand nav-item">
+                <img class="rounded-circle" src="{% static 'img\placeholder.png' %}" alt="Profile" height="60">
+            </a>
+        </div>
+    </nav>
+    <div class="border-primary container-fluid min-vh-100">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <script>
+        const searchDropButton = document.getElementById("searchDropDown")
+        const searchDropVal = document.getElementById("searchDropVal")
+        const searchChoice = document.getElementById("searchChoice")
+
+        searchDropVal.addEventListener("click", function() {
+            const searchChoicePriorText = searchDropButton.textContent
+            const searchChoicePriorVal = searchChoice.value
+
+            searchDropButton.textContent = this.textContent
+            searchChoice.value = this.dataset.value
+
+            this.textContent = searchChoicePriorText
+            this.dataset.value = searchChoicePriorVal
+        })
+    </script>
+</body>
+</html>
