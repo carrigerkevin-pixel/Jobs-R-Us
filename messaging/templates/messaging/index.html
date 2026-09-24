@@ -8,31 +8,52 @@
         </div>
         <div class="row">
             {% for message in template_data.messages %}
+<<<<<<< HEAD
             <div class="col-12 col-md-6 mb-3">
                 <div class="p-2 card align-items-center pt-4" style="background-color: gray;">
                     <div class="card-body text-center">
                         <p class="fw-bold text-primary">Message from: {{ message.sender.username}}</p>
                         <p class="text-center text-muted"> {{ message.timestamp}} </p>
+=======
+            <div class="col-md-4 col-lg-3 mb-2">
+                <div class="p-2 card align-items-center pt-4">
+                    <div class="card-body text-center">
+                        <p class="fw-bold text-primary">Message from: {{ message.sender.username}}</p>
+                        <p class="text-end text-muted"> {{ message.timestamp}} </p>
+>>>>>>> d607ca8bc7f5468fbbfa8dbbf9099af92dc6c52c
                         <div class="card-body text-start">
                             {{ message.content }}
                         </div>
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             {% empty %}
+=======
+            {% else %}
+>>>>>>> d607ca8bc7f5468fbbfa8dbbf9099af92dc6c52c
             <div class="col-12">
                 <p class="text-muted">No messages found.</p>
             </div>
             {% endfor %}
+<<<<<<< HEAD
             <div class="card-footer p-3 border-top" style="background-color: gray;">
                 <form method="POST" action="{% url 'messaging.send_message' %}">
+=======
+            <div class="card-footer bg-white p-3 border-top">
+                <form method="POST" action="{% url 'messaging.send_message' recipient.id %}">
+>>>>>>> d607ca8bc7f5468fbbfa8dbbf9099af92dc6c52c
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="recipient_username" class="form-label fw-bold">Recipient: </label>
                         <input type="text" name="recipient_username" id="recipient_username" class="form-control" placeholder="Enter Recipient Username" required>
                     </div>
                     <textarea name="content" class="form-control" rows="1" placeholder="Type your message here" required></textarea>
+<<<<<<< HEAD
                     <button type="submit" class="btn btn-primary px-4">Send Message</button>
+=======
+                    <button>Send</button>
+>>>>>>> d607ca8bc7f5468fbbfa8dbbf9099af92dc6c52c
                 </form>
             </div>
         </div>
