@@ -16,3 +16,24 @@ class Message(models.Model):
     )
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class Chat(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_1 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name = 'user_1',
+        default = None,
+    )
+    user_2 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name = 'user_2',
+        default = None,
+    )
+    messages = models.ManyToManyField (
+        'Message', related_name='messages'
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)
+    

@@ -8,36 +8,33 @@
         </div>
         <div class="row mb-4">
             <div class="card-footer p-3 border-top" style="background-color: gray;">
-                <form method="POST" action="{% url 'messaging.chat' id=chat.id %}">
+                <form method="POST" action="{% url 'messaging.send_message' %}">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="recipient_username" class="form-label fw-bold">Recipient: </label>
                         <input type="text" name="recipient_username" id="recipient_username" class="form-control" placeholder="Enter Recipient Username" required>
                     </div>
-                    <textarea name="content" class="form-control" rows="1" placeholder="Type your initial message here" required></textarea>
-                    <button type="submit" class="btn btn-primary px-4">Create Chat</button>
+                    <textarea name="content" class="form-control" rows="1" placeholder="Type your message here" required></textarea>
+                    <button type="submit" class="btn btn-primary px-4">Send Message</button>
                 </form>
             </div>
             <hr />
-            {% for chat in template_data.chats %}
-            <div class="col col-md-6 mb-3">
+            {% for message in template_data.messages %}
+            <div class="col-12 col-md-6 mb-3">
                 <div class="p-2 card align-items-center pt-4" style="background-color: gray;">
                     <div class="card-body text-center">
-                        {% if chat.user_1 == user_object %}
-                        <!-- User 2 Profile Picture -->
-                        <p class="fw-bold text-primary">{{ chat.user_2.username}}</p>
-                        {% else %}
-                        <!-- User 1 Profile Picture -->
-                        <p class="fw-bold text-primary">{{ chat.user_1.username}}</p>
-                        {% endif %}
-                        <p class="text-center text-muted"> {{ chat.timestamp}} </p>
+                        <p class="fw-bold text-primary">Message from: {{ message.sender.username}}</p>
+                        <p class="text-center text-muted"> {{ message.timestamp}} </p>
                         <hr />
+                        <div class="card-body text-center">
+                            {{ message.content }}
+                        </div>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="col-12">
-                <p class="text-muted">No chats found.</p>
+                <p class="text-muted">No messages found.</p>
             </div>
             {% endfor %}
         </div>
