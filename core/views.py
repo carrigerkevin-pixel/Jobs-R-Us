@@ -1,3 +1,5 @@
+import csv
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -33,3 +35,14 @@ def change_user_role(request, user_id):
             user.userType = new_role
             user.save()
     return redirect('manage_users')
+
+@login_required
+@user_passes_test(is_admin)
+def export_users_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="jobsrus_users.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Username', 'Email', 'Role', 'Active', 'Date Joined'])
+    for user in User.objects.all():
+        writer.writerow([user.username, user.email, user.userType, user.is_active, user.date_joined,])
+    return response
