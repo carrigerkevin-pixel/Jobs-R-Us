@@ -12,67 +12,71 @@
 <body class="bg-secondary border-primary border">
     <nav class="navbar px-3 bg-primary border-light border navbar-expand-lg">
         <div class="container border-light navbar-nav">
+            {% if user.is_authenticated %}
             <!-- TODO need to make this redirect to home or profile depending on if user is logged in or not-->
-            <a class="navbar-brand nav-item">
-                <img src="{% static 'img\placeholder.png' %}" alt="logo" height="60">
-            </a>
-            <div class="nav-item dropdown">
-                <button class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
-                    Navigation
-                </button>
-                <ul class="dropdown-menu bg-secondary border-light">
-                    <li><a class="dropdown-item text-light">Action</a></li>
-                    <li><a class="dropdown-item text-light">Another action</a></li>
-                    <li><a class="dropdown-item text-light">Something else here</a></li>
-                </ul>
-            </div>
-            <div class="nav-item d-flex">
-                <div class="dropdown">
-                    <button id="searchDropDown" class="btn btn-secondary dropdown-toggle nav-link rounded-circle searchChoice-w" data-bs-toggle="dropdown" aria-expanded="false" width="20">
-                        People
+                <div class="nav-item dropdown">
+                    <button class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                        Navigation
                     </button>
                     <ul class="dropdown-menu bg-secondary border-light">
-                        <li><a id="searchDropVal" class="dropdown-item text-light" data-value="jobs">Jobs</a></li>
+                        <li><a class="dropdown-item text-light">Profile</a></li>
+                        <li><a class="dropdown-item text-light">Jobs</a></li>
+                        <li><a class="dropdown-item text-light">People</a></li>
+                        <li><a class="dropdown-item text-light">Messages</a></li>
+                        <li><a class="dropdown-item text-light">Map</a></li> <!-- This link is not functional until Sprint 2-->
+                        <li><a class="dropdown-item text-light">My Applications</a></li>
+                        {% if user.userType == 'Recruiter' %}
+                        <li><a class="dropdown-item text-light">My Postings</a></li>
+                        <li><a class="dropdown-item text-light">Active Searches</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item text-light">Logout</a></li>
+                        {% if user.is_superuser %}
+                        <li><a class="dropdown-item text-light">Admin Functions</a></li>
+                        {% endif %}
                     </ul>
-                    <input type="hidden" name="searchPage" id="searchChoice" value="people">
                 </div>
-                <!-- TODO make action fit into search pages-->
-                <form method="GET" action="" class="d-flex">
-                    <input type="text" class="form-control">
-                    <button class="btn-secondary rounded-circle" type="submit">Go!</button>
-                </form>
-            </div>
-            <!-- TODO Make these redirect -->
-            <a class="navbar-brand nav-item">
-                <img src="{% static 'img\placeholder.png' %}" alt="Messaging" height="60">
-            </a>
-            <a class="navbar-brand nav-item">
-                <img src="{% static 'img\placeholder.png' %}" alt="Notifications" height="60">
-            </a>
-            <a class="navbar-brand nav-item">
-                <img class="rounded-circle" src="{% static 'img\placeholder.png' %}" alt="Profile" height="60">
-            </a>
+                <a class="navbar-brand nav-item" href="{% url 'accounts.login' %}">
+                    <img src="{% static 'img\placeholder.png' %}" alt="Logo" height="60" width="400">
+                </a>
+                <!-- TODO Make these redirect -->
+                <a class="nav-item">
+                    <img src="{% static 'img\messages.png' %}" alt="Messaging" height="60">
+                </a>
+                <a class="nav-item">
+                    <img src="{% static 'img\notifications.png' %}" alt="Notifications" height="60">
+                </a>
+                <a class="nav-item">
+                    <img class="rounded-circle" src="{% static 'img\placeholder.png' %}" alt="Profile" height="60">
+                </a>
+            {% else %}
+                <!-- Every link directs to Login page -->
+                <div class="nav-item dropdown">
+                    <button class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                        Navigation
+                    </button>
+                    <ul class="dropdown-menu bg-secondary border-light">
+                        <li><a class="dropdown-item text-light" href="{% url 'accounts.login' %}">Login</a></li>
+                        <li><a class="dropdown-item text-light" href="{% url 'accounts.signup' %}">Signup</a></li>
+                    </ul>
+                </div>
+                <a class="navbar-brand nav-item" href="{% url 'accounts.login' %}">
+                    <img src="{% static 'img\placeholder.png' %}" alt="Logo" height="60" width="400">
+                </a>
+                <a class="nav-item" href="{% url 'accounts.login' %}">
+                    <img src="{% static 'img\messages.png' %}" alt="Messaging" height="60">
+                </a>
+                <a class="nav-item" href="{% url 'accounts.login' %}">
+                    <img src="{% static 'img\notifications.png' %}" alt="Notifications" height="60">
+                </a>
+                <a class="nav-item" href="{% url 'accounts.login' %}">
+                    <img class="rounded-circle" src="{% static 'img\no_profile.png' %}" alt="Profile" height="60">
+                </a>
+            {% endif %}
         </div>
     </nav>
     <div class="border-primary container-fluid min-vh-100">
         {% block content %}
         {% endblock content %}
     </div>
-    <script>
-        const searchDropButton = document.getElementById("searchDropDown")
-        const searchDropVal = document.getElementById("searchDropVal")
-        const searchChoice = document.getElementById("searchChoice")
-
-        searchDropVal.addEventListener("click", function() {
-            const searchChoicePriorText = searchDropButton.textContent
-            const searchChoicePriorVal = searchChoice.value
-
-            searchDropButton.textContent = this.textContent
-            searchChoice.value = this.dataset.value
-
-            this.textContent = searchChoicePriorText
-            this.dataset.value = searchChoicePriorVal
-        })
-    </script>
 </body>
 </html>
