@@ -8,14 +8,14 @@ User = get_user_model()
 # Create your views here.
 @login_required
 def index(request):
-    messages = Message.objects.filter(recipient=request.user)
+    messages = Message.objects.filter(recipient=request.user).order_by('-timestamp')
     template_data = {}
     template_data['title'] = 'Messages'
     template_data['messages'] = messages
-    return render(request, 'messages/index.html', {'template_data': template_data})
+    return render(request, 'messaging/index.html', {'template_data': template_data})
 
 @login_required
-def message(request):
+def send_message(request):
     if request.method == 'POST':
         recipient_username = request.POST.get('recipient_username', '').strip()
         content = request.POST.get('content', '').strip()
