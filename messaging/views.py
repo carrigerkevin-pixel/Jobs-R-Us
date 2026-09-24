@@ -12,7 +12,7 @@ def index(request):
     template_data = {}
     template_data['title'] = 'Messages'
     template_data['messages'] = messages
-    return render(request, 'messages/index.html', {'template_data': template_data})
+    return render(request, 'messaging/index.html', {'template_data': template_data})
 
 @login_required
 def message(request):
