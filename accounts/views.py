@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .forms import CustomUserCreationForm
+from django.shortcuts import render, get_object_or_404
+from .forms import CustomUserCreationForm, ProfileEditForm
 from django.contrib.auth import login as auth_login, authenticate
 from django.shortcuts import redirect
 from .models import ApplicantProfile, RecruiterProfile
@@ -17,7 +17,6 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            print(user.userType)
             if user.userType == "Applicant":
                 ApplicantProfile.objects.create(user=user)
             elif user.userType == "Recruiter":
@@ -58,3 +57,25 @@ def profile(request):
     
     return render(request, 'accounts/profile.html',
         {'template_data': template_data})
+@login_required
+def editProfile(request):
+    profile = get_object_or_404(ApplicantProfile, user=request.user)
+    template_data = {}
+    template_data['title'] = 'Edit Profile'
+    if request.method == 'GET':
+        template_data['form'] = ProfileEditForm(instance = profile)
+        return render(request, 'accounts/editProfile.html',
+            {'template_data': template_data})
+    elif request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance = profile)
+        if form.is_valid():
+            
+            #applicantProfile = form.save(commit=False)
+            #applicantProfile.user = request.user
+            #applicantProfile.save()
+            form.save()
+            return redirect('accounts.profile')
+        else:
+            form = ProfileEditForm()
+            return render(request, 'accounts/editProfile.html',
+                {'template_data': template_data})
