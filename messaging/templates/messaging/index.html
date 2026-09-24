@@ -6,19 +6,15 @@
             <h2>Messages</h2>
             <hr />
         </div>
-        <div class="row">
+        <div class="row mb-4">
             {% for message in template_data.messages %}
             <div class="col-12 col-md-6 mb-3">
                 <div class="p-2 card align-items-center pt-4" style="background-color: gray;">
                     <div class="card-body text-center">
                         <p class="fw-bold text-primary">Message from: {{ message.sender.username}}</p>
                         <p class="text-center text-muted"> {{ message.timestamp}} </p>
-            <div class="col-md-4 col-lg-3 mb-2">
-                <div class="p-2 card align-items-center pt-4">
-                    <div class="card-body text-center">
-                        <p class="fw-bold text-primary">Message from: {{ message.sender.username}}</p>
-                        <p class="text-end text-muted"> {{ message.timestamp}} </p>
-                        <div class="card-body text-start">
+                        <hr />
+                        <div class="card-body text-center">
                             {{ message.content }}
                         </div>
                     </div>
@@ -31,8 +27,6 @@
             {% endfor %}
             <div class="card-footer p-3 border-top" style="background-color: gray;">
                 <form method="POST" action="{% url 'messaging.send_message' %}">
-            <div class="card-footer bg-white p-3 border-top">
-                <form method="POST" action="{% url 'messaging.send_message' recipient.id %}">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="recipient_username" class="form-label fw-bold">Recipient: </label>
@@ -40,7 +34,6 @@
                     </div>
                     <textarea name="content" class="form-control" rows="1" placeholder="Type your message here" required></textarea>
                     <button type="submit" class="btn btn-primary px-4">Send Message</button>
-                    <button>Send</button>
                 </form>
             </div>
         </div>
