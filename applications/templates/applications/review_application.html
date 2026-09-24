@@ -1,0 +1,17 @@
+<h1>Review Application</h1>
+
+<h2>Candidate Profile</h2>
+<p><strong>Name:</strong> {{ application.applicant.fullName }}</p>
+<p><strong>Headline:</strong> {{ application.applicant.headline }}</p>
+<p><strong>Skills:</strong> {{ application.applicant.skills }}</p>
+<p><strong>Education:</strong> {{ application.applicant.education }}</p>
+<p><strong>Work Experience:</strong> {{ application.applicant.work_experience }}</p>
+<p><strong>Links:</strong> {{ application.applicant.links }}</p>
+
+<h2>Application Details</h2>
+<p><strong>Position:</strong> {{ application.job.title }}</p>
+<p><strong>Status:</strong> {{ application.status }}</p>
+<p><strong>Applied:</strong> {{ application.applied_at }}</p>
+<p><strong>Note from applicant:</strong> {{ application.note }}</p>
+
+<a href="{% url 'applicant_list' %}">Back to applicants</a>

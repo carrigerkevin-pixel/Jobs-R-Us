@@ -1,4 +1,7 @@
 <h1>Manage Users</h1>
+<a href="{% url 'export_users_csv' %}">
+    <button>Export Users as CSV</button>
+</a>
 <table border="1" cellpadding="8">
     <tr>
         <th>Username</th>
@@ -16,8 +19,8 @@
             <form method="post" action="{% url 'change_user_role' user.id %}">
                 {% csrf_token %}
                 <select name="role">
-                   <option value="seeker" {% if user.profile.role == 'seeker' %}selected{% endif %}>Job Seeker</option>
-                   <option value="recruiter" {% if user.profile.role == 'recruiter' %}selected{% endif %}>Recruiter</option>
+                   <option value="Applicant" {% if user.userType == 'Applicant' %}selected{% endif %}>Applicant</option>
+                   <option value="Recruiter" {% if user.userType == 'Recruiter' %}selected{% endif %}>Recruiter</option>
                 </select>
                 <button type="submit">Update Role</button>
             </form>
