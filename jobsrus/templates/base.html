@@ -13,40 +13,39 @@
     <nav class="navbar px-3 bg-primary border-light border navbar-expand-lg">
         <div class="container border-light navbar-nav">
             {% if user.is_authenticated %}
-            <!-- TODO need to make this redirect to home or profile depending on if user is logged in or not-->
                 <div class="nav-item dropdown">
                     <button class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
                         Navigation
                     </button>
                     <ul class="dropdown-menu bg-secondary border-light">
-                        <li><a class="dropdown-item text-light">Profile</a></li>
-                        <li><a class="dropdown-item text-light">Jobs</a></li>
-                        <li><a class="dropdown-item text-light">People</a></li>
-                        <li><a class="dropdown-item text-light">Messages</a></li>
+                        <li><a href="{% url 'accounts.profile' %}" class="dropdown-item text-light" >Profile</a></li>
+                        <li><a class="dropdown-item text-light">Jobs</a></li> <!-- TODO make this function once Elizabeth finishes the page -->
+                        <li><a class="dropdown-item text-light" href="{% url 'search.candidates_search' %}">People</a></li>
+                        <li><a class="dropdown-item text-light" href="{% url 'messages' %}">Messages</a></li>
                         <li><a class="dropdown-item text-light">Map</a></li> <!-- This link is not functional until Sprint 2-->
-                        <li><a class="dropdown-item text-light">My Applications</a></li>
+                        <li><a href="{% url 'applications.myApplications' %}" class="dropdown-item text-light">My Applications</a></li>
                         {% if user.userType == 'Recruiter' %}
                         <li><a class="dropdown-item text-light">My Postings</a></li>
-                        <li><a class="dropdown-item text-light">Active Searches</a></li>
+                        <li><a class="dropdown-item text-light">Active Searches</a></li> <!-- This link is not functional until Sprint 2 -->
                         {% endif %}
-                        <li><a class="dropdown-item text-light">Logout</a></li>
+                        <li><a href="{% url 'accounts.logout' %}" class="dropdown-item text-light">Logout</a></li>
                         {% if user.is_superuser %}
-                        <li><a class="dropdown-item text-light">Admin Functions</a></li>
+                        <li><a class="dropdown-item text-light">Admin Functions</a></li> <!-- TODO make this function once Kevin pushes page -->
                         {% endif %}
                     </ul>
                 </div>
-                <a class="navbar-brand nav-item" href="{% url 'accounts.login' %}">
+                <a class="navbar-brand nav-item" href="{% url 'accounts.profile' %}">
                     <img src="{% static 'img\placeholder.png' %}" alt="Logo" height="60" width="400">
                 </a>
                 <!-- TODO Make these redirect -->
-                <a class="nav-item">
+                <a class="nav-item" href="{% url 'messages' %}">
                     <img src="{% static 'img\messages.png' %}" alt="Messaging" height="60">
                 </a>
-                <a class="nav-item">
+                <a class="nav-item"> <!-- This link will not function until Sprint 2-->
                     <img src="{% static 'img\notifications.png' %}" alt="Notifications" height="60">
                 </a>
-                <a class="nav-item">
-                    <img class="rounded-circle" src="{% static 'img\placeholder.png' %}" alt="Profile" height="60">
+                <a class="nav-item" href="{% url 'accounts.profile' %}">
+                    <img class="rounded-circle" src="{% static 'img\no_profile.png' %}" alt="Profile" height="60">
                 </a>
             {% else %}
                 <!-- Every link directs to Login page -->

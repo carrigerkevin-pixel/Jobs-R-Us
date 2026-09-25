@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="w-50">
+    {% for application in template_data.applications %}
+        <div height="300">
+            <ul>
+                <li>{{ application.job.title }}</li>
+                <li>{{ application.job.company }}</li>
+            </ul>
+            <ul>
+                <li>Submitted:</li>
+                <li>{{ application.applied_at }}</li>
+            </ul>
+            <ul>
+                <li>Application Status</li>
+                <li>
+                    <div class="container">
+                        {% if application.status == 'Applied'}
+                        <div class="rounded circle" style="background-color: blue"></div>
+                        {% endif %}
+                        {% if application.status == 'Review'}
+                        <div class="rounded circle" style="background-color: yellow"></div>
+                        {% endif %}
+                        {% if application.status == 'Interview'}
+                        <div class="rounded circle" style="background-color: purple"></div>
+                        {% endif %}
+                        {% if application.status == 'Offer'}
+                        <div class="rounded circle" style="background-color: green"></div>
+                        {% endif %}
+                        {% if application.status == 'Closed'}
+                        <div class="rounded circle" style="background-color: grey"></div>
+                        {% endif %}
+                        {{ application.status }}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

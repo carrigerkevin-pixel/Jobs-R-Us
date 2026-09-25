@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .forms import CustomUserCreationForm, ProfileEditForm
-from django.contrib.auth import login as auth_login, authenticate
+from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 from django.shortcuts import redirect
 from .models import ApplicantProfile, RecruiterProfile
 from django.contrib.auth.decorators import login_required
@@ -26,6 +26,7 @@ def signup(request):
             template_data['form'] = form
             return render(request, 'accounts/signup.html',
                 {'template_data': template_data})
+
 def login(request):
     template_data = {}
     template_data['title'] = 'Login'
@@ -46,6 +47,12 @@ def login(request):
         else:
             auth_login(request, user)
             return redirect('accounts.profile')
+
+@login_required
+def logout(request):
+    auth_logout(request)
+    return redirect('home')
+
 @login_required
 def profile(request):
     template_data = {}
