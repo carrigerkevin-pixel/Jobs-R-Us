@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3">
+    <div class="container">
+        <div class="col mx-auto mb-3">
+            <h2>Search</h2>
+            <hr />
+        </div>
+        <div class="row mb-4">
+            <h3 style="color: goldenrod">Filters</h3>
+            <div class="card rounded">
+                <form action="{% url 'search.filter_candidates' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row g-2">
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold">Skills:</label>
+                            <input type="text" name="skills" class="form-control" style="border: black solid 2px;">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold">Location:</label>
+                            <input type="text" name="location" class="form-control" style="border: black solid 2px;">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold">Projects:</label>
+                            <input type="number" name="projects" class="form-control" style="border: black solid 2px;">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="d-flex gap-1">
+                        <button type="submit" class="btn btn-success btn-sm w-100">Filter</button>
+                        <a href="{% url 'search.candidates_search' %}" class="btn btn-outline-secondary btn-sm flex-fill" style="background-color: red; color:black;">Clear Filters</a>
+                    </div>
+                </form>
+                <br />
+            </div>
+        </div>
+        <div class="row mb-4">
+            {% for candidate in template_data.candidates %}
+            <div class="card candidate-bubble">
+                <div class="fs-5 p-4 align-items-center pt-4">
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+                        <!-- Profile Picture -->
+                        <p class="mb-0 fw-bold text-primary flex">{{ candidate.fullName}}, {{ candidate.headline}} | {{ candidate.location }} | <span style="color: black;">Skills: {{ candidate.skills }} | Projects: {{ candidate.projects }}</span></p>
+                        <div class="d-flex align-items-center gap-3">
+                            <div>
+                                <!--<button>Message</button>-->
+                                <button type="button" class="btn bg-dark btn-link p-0 text-decoration-none text-white p-3 pt-2 pb-2" data-bs-toggle="modal" data-bs-target="#emailModal{{ candidate.id }}">Email</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="emailModal{{ candidate.id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content text-light bg-white">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Send Email to {{ candidate.fullName }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                        </div>
+                        <form action = "{% url 'send_email' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="modal-body text-start">
+                                <input type="hidden" name = "candidate_id" value="{{ candidate.id }}">
+                                <div class="mb-3">
+                                    <label class="form-label">Your Email</label>
+                                    <input type="text" name="email" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Subject</label>
+                                    <input type="text" name="subject" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email Body</label>
+                                    <textarea name="body" class="form-control" rows="4" required></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success w-100">Send Email</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            {% empty %}
+            <div class="col-12">
+                <p class="text-muted">No candidates found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

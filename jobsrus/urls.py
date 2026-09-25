@@ -24,4 +24,5 @@ urlpatterns = [
     path('applications/', include('applications.urls')),
     path('messaging/', include('messaging.urls')),
     path('', include('core.urls')),
+    path('search/', include('search.urls')),
 ]

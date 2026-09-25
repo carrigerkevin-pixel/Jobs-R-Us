@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'applications',
     'messaging',
     'core',
+    'search',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,5 @@ AUTH_USER_MODEL = "accounts.User"
 STATICFILES_DIRS = [
     BASE_DIR / 'jobsrus/static/',
     ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

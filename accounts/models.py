@@ -21,6 +21,8 @@ class ApplicantProfile(models.Model):
     work_experience = models.TextField(blank=True)
     links = models.URLField(blank=True)
     is_profile_private = models.BooleanField(default=False)
+    location = models.CharField(max_length=200, blank=False)
+    projects = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.fullName} "
