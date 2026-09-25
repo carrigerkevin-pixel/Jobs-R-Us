@@ -15,7 +15,8 @@ def is_admin(user):
 @user_passes_test(is_admin)
 def manage_users(request):
     users = User.objects.all()
-    return render(request, 'core/manage_users.html', {'users': users})
+    template_data = {'title': 'Manage Users'}
+    return render(request, 'core/manage_users.html', {'users': users, 'template_data': template_data})
 
 @login_required
 @user_passes_test(is_admin)
@@ -46,3 +47,10 @@ def export_users_csv(request):
     for user in User.objects.all():
         writer.writerow([user.username, user.email, user.userType, user.is_active, user.date_joined,])
     return response
+
+
+@login_required
+@user_passes_test(is_admin)
+def admin_dashboard(request):
+    template_data = {'title': 'Admin Dashboard'}
+    return render(request, 'core/admin_dashboard.html', {'template_data': template_data})
