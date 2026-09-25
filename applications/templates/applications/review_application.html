@@ -1,17 +1,107 @@
-<h1>Review Application</h1>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container my-4">
 
-<h2>Candidate Profile</h2>
-<p><strong>Name:</strong> {{ application.applicant.fullName }}</p>
-<p><strong>Headline:</strong> {{ application.applicant.headline }}</p>
-<p><strong>Skills:</strong> {{ application.applicant.skills }}</p>
-<p><strong>Education:</strong> {{ application.applicant.education }}</p>
-<p><strong>Work Experience:</strong> {{ application.applicant.work_experience }}</p>
-<p><strong>Links:</strong> {{ application.applicant.links }}</p>
+    <div class="card border-primary mb-3">
+        <div class="card-body bg-light d-flex justify-content-between flex-wrap gap-3">
+            <div><strong class="text-secondary">Posted:</strong> {{ application.job.created_at|date:"M d, Y" }}</div>
+            <div><strong class="text-secondary">Applied:</strong> {{ application.applied_at|date:"M d, Y" }}</div>
+            <div>
+                <strong class="text-secondary">Status:</strong>
+                <span class="badge bg-primary">{{ application.status }}</span>
+            </div>
+        </div>
+    </div>
 
-<h2>Application Details</h2>
-<p><strong>Position:</strong> {{ application.job.title }}</p>
-<p><strong>Status:</strong> {{ application.status }}</p>
-<p><strong>Applied:</strong> {{ application.applied_at }}</p>
-<p><strong>Note from applicant:</strong> {{ application.note }}</p>
+    <div class="card border-primary">
+        <div class="card-body bg-light">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div class="d-flex gap-3">
+                    <img src="{% static 'img/placeholder.png' %}" class="rounded-circle" width="70" height="70" alt="avatar">
+                    <div>
+                        <h4 class="text-secondary mb-0">{{ application.applicant.fullName }}</h4>
+                        <p class="text-muted mb-1">{{ application.applicant.headline }}</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-outline-secondary btn-sm">Message</a>
+                    <a href="mailto:{{ application.applicant.user.email }}" class="btn btn-outline-secondary btn-sm">Email</a>
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changeStatusModal">
+                        Change Status
+                    </button>
+                </div>
+            </div>
 
-<a href="{% url 'applicant_list' %}">Back to applicants</a>
+            <hr>
+
+            <div class="mb-3">
+                <strong class="text-secondary">Skills:</strong>
+                {% for skill in application.applicant.skills.split %}
+                    <span class="badge bg-secondary">{{ skill }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                <strong class="text-secondary">Links:</strong>
+                {% if application.applicant.links %}
+                    <a href="{{ application.applicant.links }}" target="_blank">{{ application.applicant.links }}</a>
+                {% else %}
+                    <span class="text-muted">None provided</span>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <h6 class="text-secondary">Experience</h6>
+                <p>{{ application.applicant.work_experience|default:"Not provided" }}</p>
+            </div>
+
+            <div class="mb-3">
+                <h6 class="text-secondary">Education</h6>
+                <p>{{ application.applicant.education|default:"Not provided" }}</p>
+            </div>
+
+            <div class="mb-3">
+                <h6 class="text-secondary">Application Note</h6>
+                <p>{{ application.note|default:"No note submitted" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'applicant_list' %}" class="btn btn-secondary mt-3">Back to Applicants</a>
+</div>
+
+<!-- Change Status Modal -->
+<div class="modal fade" id="changeStatusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{% url 'change_application_status' application.id %}">
+                {% csrf_token %}
+                <div class="modal-header bg-secondary text-light">
+                    <h5 class="modal-title">Change Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button type="submit" name="status" value="Applied" class="btn btn-outline-secondary w-100">Applied</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" name="status" value="Review" class="btn btn-outline-secondary w-100">Review</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" name="status" value="Interview" class="btn btn-outline-secondary w-100">Interview</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" name="status" value="Offer" class="btn btn-outline-secondary w-100">Offer</button>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="status" value="Closed" class="btn btn-outline-dark w-100">Closed</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
