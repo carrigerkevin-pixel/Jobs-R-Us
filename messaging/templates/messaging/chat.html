@@ -3,41 +3,45 @@
 <div class="p-3">
     <div class="container">
         <div class="col mx-auto mb-3">
-            <h2>Messages</h2>
+            {% if template_data.chat.user_1 == request.user %}        
+            <h2 class="fw-bold text-primary">Chat with {{ template_data.chat.user_2.username}}</h2>
+            {% else %}
+            <h2 class="fw-bold text-primary">Chat with {{ template_data.chat.user_1.username}}</h2>
+            {% endif %}
             <hr />
         </div>
         <div class="row mb-4">
-            <div class="card-footer p-3 border-top" style="background-color: gray;">
-                <form method="POST" action="{% url 'messaging.send_message' %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="recipient_username" class="form-label fw-bold">Recipient: </label>
-                        <input type="text" name="recipient_username" id="recipient_username" class="form-control" placeholder="Enter Recipient Username" required>
-                    </div>
-                    <textarea name="content" class="form-control" rows="1" placeholder="Type your message here" required></textarea>
-                    <button type="submit" class="btn btn-primary px-4">Send Message</button>
-                </form>
-            </div>
-            <hr />
-            {% for message in template_data.messages %}
-            <div class="col-12 col-md-6 mb-3">
-                <div class="p-2 card align-items-center pt-4" style="background-color: gray;">
-                    <div class="card-body text-center">
-                        <p class="fw-bold text-primary">Message from: {{ message.sender.username}}</p>
-                        <p class="text-center text-muted"> {{ message.timestamp}} </p>
-                        <hr />
-                        <div class="card-body text-center">
-                            {{ message.content }}
-                        </div>
+            <div class="chat" id="scroll-bottom">
+                {% for message in template_data.messages %}
+                <div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+                    <div class="message_bubble">
+                        {{ message.content }}
                     </div>
                 </div>
+                {% empty %}
+                <div class="col-12">
+                    <p class="text-muted">No messages found.</p>
+                </div>
+                {% endfor %}
             </div>
-            {% empty %}
-            <div class="col-12">
-                <p class="text-muted">No messages found.</p>
+            <hr />
+            <div class="card-footer p-3" style="background-color: gray; border-radius: 12pt;">
+                <form method="POST" action="{% url 'messaging.send_message_in_chat' template_data.chat.id %}" class="d-flex align-items-end gap-2">
+                    {% csrf_token %}
+                    <textarea name="content" class="form-control textarea_messaging auto-grow" rows="1" placeholder="Type your message here" required></textarea>
+                    <br />
+                    <button type="submit" class="btn btn-primary px-4">Send</button>
+                </form>
             </div>
-            {% endfor %}
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const chatContainer = document.getElementById("scroll-bottom");
+        if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    });
+</script>
 {% endblock content %}

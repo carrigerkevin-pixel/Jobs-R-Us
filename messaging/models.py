@@ -2,20 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 # Create your models here.
-class Message(models.Model):
-    message_id = models.AutoField(primary_key=True)
-    sender = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='sent_messages'
-    )
-    recipient = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='received_messages'
-    )
-    content = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Chat(models.Model):
@@ -32,8 +18,23 @@ class Chat(models.Model):
         related_name = 'user_2',
         default = None,
     )
-    messages = models.ManyToManyField (
-        'Message', related_name='messages'
-    )
     timestamp = models.DateTimeField(auto_now_add=True)
     
+
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
+    message_id = models.AutoField(primary_key=True)
+    sender = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='sent_messages'
+    )
+    recipient = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='received_messages'
+    )
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+
