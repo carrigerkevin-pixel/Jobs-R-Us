@@ -59,3 +59,31 @@
     border-bottom-color: #000000;
     border-width: 0px;
 }
+
+.candidate-bubble {
+    border-radius: 12pt;
+    background-color: #F2F0EF;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.modal-body {
+    background-color: #051E39;
+}
+
+.modal-footer {
+    background-color: #B39051;
+}
+
+.modal-header {
+    background-color: #B39051;
+}
+
+.bg-red {
+    background-color: red;
+}
