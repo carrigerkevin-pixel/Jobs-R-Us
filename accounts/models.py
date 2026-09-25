@@ -14,7 +14,7 @@ class User(AbstractUser):
 
 class ApplicantProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="applicantProfile")
-    fullName= models.CharField(max_length=200, default="Full Name")
+    fullName= models.CharField(max_length=200, blank=True)
     headline = models.CharField(max_length=200, blank=True)
     skills = models.CharField(max_length=300, blank=True)
     education = models.TextField(blank=True)
