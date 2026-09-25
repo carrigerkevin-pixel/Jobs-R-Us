@@ -16,3 +16,11 @@ def applicant_list(request):
 def review_application(request, application_id):
     application = get_object_or_404(Application, id=application_id)
     return render(request, 'applications/review_application.html', {'application': application})
+
+@login_required
+def myApplications(request):
+    template_data = {}
+    template_data['title'] = "My Applications"
+    applications = Application.objects.filter(applicant=request.user)
+    template_data['applications'] = applications
+    return render(request, 'applications/myApplications.html', {'template_data':template_data})
