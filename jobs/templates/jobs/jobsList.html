@@ -10,22 +10,12 @@
             value="{{ query }}"
         >
 
-        <button class="filters"></button>
+        <button class="filters">filters</button>
         <div class = "filter-popup-wrapper">
             <div class="filter-popup rounded-2">
                 <div class="close">X</div>
                 <div class="popup-content">
                     <h2>Search Filters</h2>
-                    <!--<form id="filter-form">
-
-                        <label for="category">Category:</label>
-                        <select id="category" name="category">
-                            <option value="all">All</option>
-                            <option value="category1">Category 1</option>
-                            <option value="category2">Category 2</option>
-                        </select>
-                        <button type="submit">Apply Filters</button>
-                    </form> -->
                     <form method="get">
                         <div class="form-row">
                             <div class="form-field">
@@ -67,7 +57,7 @@
                                 {{ form.visaSponsorship }}
                             </div>
                         </div>
-                        <button type="submit">Search</button>
+                        <button type="submit" name="action" value="filter">Search</button>
                     </form>
                 </div>
             </div>

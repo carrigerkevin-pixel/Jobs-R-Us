@@ -42,6 +42,7 @@ def login(request):
                 {'template_data': template_data})
         else:
             auth_login(request, user)
+            ApplicantProfile.objects.get_or_create(user=user)
             return redirect('accounts.profile')
 @login_required
 def profile(request):

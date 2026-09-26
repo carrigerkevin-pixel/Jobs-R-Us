@@ -4,8 +4,32 @@
             <p><b>{{job.title}} @ {{job.company}} </b> | {{job.location}}  | On Site: {{job.onSite}} | Salary Range: ${{job.minSalary}} to ${{job.maxSalary}}| Visa Sponsorship: {{job.visaSponsorship}}</p>
             <p>Skills: {% for skill in job.skills %} {{skill}} {% endfor %}</p>
             <p>{{job.description}}</p>
+
+            {% if user.is_authenticated %}
+                <button class="apply">Apply Now</button>
+            {% endif %}
+            <div id="apply-form" class="hidden">
+                <form method="post">
+                    {% csrf_token %}
+
+                    {{ form2.note }}
+                    <input type="hidden" name="job_id" value="{{ job.id }}">
+                    <button type="submit" name="action" value="apply">Submit Application</button>
+                </form>
+            </div>
         </div>
     </div>
 {% empty %}
     <p>No products found.</p>
 {% endfor %}
+
+<script>
+    const buttons = document.querySelectorAll(".apply");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function() {
+            const form = this.nextElementSibling;
+            form.classList.toggle("hidden");
+        });
+    });
+</script>
