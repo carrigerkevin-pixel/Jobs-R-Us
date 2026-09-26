@@ -39,3 +39,8 @@ class FiltersForm(forms.Form):
         required=False,
         initial=False
     )
+
+class QuickApplyForm(forms.Form):
+    note = forms.CharField(widget=forms.TextInput(attrs={
+        "placeholder": "Enter a note..."
+    }))
