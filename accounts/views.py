@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .forms import CustomUserCreationForm, ProfileEditForm
 from django.contrib.auth import login as auth_login, authenticate
 from django.shortcuts import redirect
-from .models import ApplicantProfile, RecruiterProfile
+from .models import ApplicantProfile
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -17,10 +17,7 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            if user.userType == "Applicant":
-                ApplicantProfile.objects.create(user=user)
-            elif user.userType == "Recruiter":
-                RecruiterProfile.objects.create(user=user)
+            ApplicantProfile.objects.create(user=user)
             return redirect('accounts.login')
         else:
             template_data['form'] = form
@@ -53,7 +50,7 @@ def profile(request):
     if request.user.userType == "Applicant":
         template_data['profile'] = request.user.applicantProfile
     else:
-        template_data['profile'] = request.user.recruiterProfile
+        template_data['profile'] = request.user.applicantProfile
     
     return render(request, 'accounts/profile.html',
         {'template_data': template_data})
