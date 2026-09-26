@@ -52,6 +52,7 @@
 .searchChoice-w {
     width: 100px;
 }
+
 .searchButtonBlackBorder {
     border-left-color: #000000;
     border-right-color: #000000;
@@ -102,4 +103,83 @@
   background: white;
   box-shadow: -4px 0 16px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
+.candidate-bubble {
+    border-radius: 12pt;
+    background-color: #F2F0EF;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.modal-body {
+    background-color: #051E39;
+}
+
+.modal-footer {
+    background-color: #B39051;
+}
+
+.modal-header {
+    background-color: #B39051;
+}
+
+.bg-red {
+  background-color: red;
+}
+
+.auto-grow {
+    field-sizing: content;
+    resize: none;
+    min-height: 50px;
+    max-height: 200px;
+}
+
+.message {
+    display: flex;
+    width: 100%;
+}
+
+.message.sent {
+    justify-content: flex-end;
+}
+
+.message.received {
+    justify-content: flex-start;
+}
+
+.message.sent .message_bubble {
+    background-color: #B39051;
+    color: #ffffff;
+    border-radius: 18px 18px 4px 18px;
+}
+
+.message.received .message_bubble {
+    background-color: #efefef;
+    color: #262626;
+    border-radius: 18px 18px 18px 4px;
+}
+
+.message_bubble {
+    max-width: 60%;
+    padding: 8px 12px;
+    word-break: break-word;
+}
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 8px;
+    padding: 16px;
+    max-height: 75vh;
+    overflow-y: auto;
+    scrollbar-color: #B39051 #051E39;
+}
+
+.textarea_messaging {
+    flex-grow: 1;
 }

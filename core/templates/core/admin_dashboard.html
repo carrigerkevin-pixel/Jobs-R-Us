@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h3 class="text-primary">Admin Dashboard</h3>
+    <div class="row g-3 mt-2">
+        <div class="col-md-4">
+            <div class="card border-primary h-100">
+                <div class="card-body bg-light">
+                    <h5 class="text-secondary">Manage Users</h5>
+                    <p class="text-muted">Activate, deactivate, or change a user's role.</p>
+                    <a href="{% url 'manage_users' %}" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-primary h-100">
+                <div class="card-body bg-light">
+                    <h5 class="text-secondary">Export Users</h5>
+                    <p class="text-muted">Download all user data as a CSV file.</p>
+                    <a href="{% url 'export_users_csv' %}" class="btn btn-primary">Export</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
