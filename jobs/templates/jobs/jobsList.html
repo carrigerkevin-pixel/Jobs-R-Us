@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="text-primary">
+        <h1>Jobs</h1>
+
+        <input
+            type="search"
+            id="search-input"
+            placeholder="Search jobs..."
+            value="{{ query }}"
+        >
+
+        <button class="filters"></button>
+        <div class = "filter-popup-wrapper">
+            <div class="filter-popup rounded-2">
+                <div class="close">X</div>
+                <div class="popup-content">
+                    <h2>Search Filters</h2>
+                    <!--<form id="filter-form">
+
+                        <label for="category">Category:</label>
+                        <select id="category" name="category">
+                            <option value="all">All</option>
+                            <option value="category1">Category 1</option>
+                            <option value="category2">Category 2</option>
+                        </select>
+                        <button type="submit">Apply Filters</button>
+                    </form> -->
+                    <form method="get">
+                        <div class="form-row">
+                            <div class="form-field">
+                                {{ form.title.label_tag }}
+                                {{ form.title }}
+                            </div>
+                            <div class="form-field">
+                                {{ form.onSite.label_tag }}
+                                {{ form.onSite }}
+                            </div>
+                            <div class="form-field">
+                                {{ form.remote.label_tag }}
+                                {{ form.remote }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                {{ form.location.label_tag }}
+                                {{ form.location }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                {{ form.skills.label_tag }}
+                                {{ form.skills }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                {{ form.minSalary.label_tag }}
+                                {{ form.minSalary }}
+                            </div>
+                            <div class="form-field">
+                                {{ form.maxSalary.label_tag }}
+                                {{ form.maxSalary }}
+                            </div>
+                            <div class="form-field">
+                                Visa Sponsorship:
+                                {{ form.visaSponsorship }}
+                            </div>
+                        </div>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="job-results">
+            {% include "jobs/jobsResults.html" %}
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById("search-input");
+        const resultsContainer = document.getElementById("job-results");
+
+        let timeout;
+
+        searchInput.addEventListener("input", function () {
+            clearTimeout(timeout);
+
+            timeout = setTimeout(() => {
+                const query = searchInput.value;
+
+                fetch(`?q=${encodeURIComponent(query)}`, {
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    resultsContainer.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error("Search failed:", error);
+                });
+            }, 300);
+        });
+
+        const filterBtn = document.querySelector('.filters');
+        const popupWrapper = document.querySelector('.filter-popup-wrapper');
+        const popupClose = document.querySelector('.close');
+
+        filterBtn.addEventListener('click', () => {
+            popupWrapper.style.display = "block";
+        });
+
+        popupClose.addEventListener('click', () => {
+            popupWrapper.style.display = 'none';
+        });
+
+        document.getElementById('filter-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Add AJAX call here to submit the filter options
+            popupWrapper.style.display = 'none'; // Close popup after submission
+        });
+
+    </script>
+
+{% endblock content %}

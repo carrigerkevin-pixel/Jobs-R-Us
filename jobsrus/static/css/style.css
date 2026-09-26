@@ -61,6 +61,48 @@
     border-width: 0px;
 }
 
+/* Elements */
+
+.job-container {
+    width: 40%;
+    height: auto;
+    background-color: #FF0000;
+    padding: 20px;
+    color: #FFFFFF
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-field {
+    /*flex: 1;*/
+}
+
+.filter-popup-wrapper {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.filter-popup-wrapper.open {
+  display: block;
+}
+
+.filter-popup {
+  position: absolute;
+  top: 50px;
+  right: 12.5vw;
+  width: 75vw;/*min(1080px, 50vw);*/
+  height: 40vh;
+  padding: 24px;
+  box-sizing: border-box;
+  background: white;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
 .candidate-bubble {
     border-radius: 12pt;
     background-color: #F2F0EF;
