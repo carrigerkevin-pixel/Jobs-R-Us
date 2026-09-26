@@ -103,6 +103,8 @@
   background: white;
   box-shadow: -4px 0 16px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
+}
+
 .candidate-bubble {
     border-radius: 12pt;
     background-color: #F2F0EF;
